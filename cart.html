@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Moringa FoodHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-utensils"></i>
+      <span>Moringa FoodHub</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <a href="cart.html" class="cart-btn active">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Cart Section -->
+  <section class="cart-section">
+    <h2 class="section-title">Your Cart</h2>
+    <div class="cart-container">
+      <div id="cart-items">
+        <!-- Cart items will be inserted here -->
+      </div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="total-amount">
+          <span>Total:</span>
+          <span id="cart-total">KSH 0</span>
+        </div>
+        <button id="checkout-btn" class="checkout-btn">
+          <i class="fas fa-shopping-bag"></i>
+          Place Order
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-phone"></i> +254 700 000 000</p>
+        <p><i class="fas fa-envelope"></i> info@moringafoodhub.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Moringa FoodHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize cart from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Display cart items
+    function displayCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+        cartTotal.textContent = 'KSH 0';
+        return;
+      }
+
+      cartItems.innerHTML = cart.map((item, index) => {
+        total += item.price * item.quantity;
+        return `
+                    <div class="cart-item">
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <p>KSH ${item.price}</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button onclick="updateQuantity(${index}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+      }).join('');
+
+      cartTotal.textContent = `KSH ${total}`;
+      updateCartCount();
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      const cartCount = document.querySelector('.cart-count');
+      cartCount.textContent = cart.length;
+    }
+
+    // Update item quantity
+    function updateQuantity(index, change) {
+      cart[index].quantity = Math.max(1, cart[index].quantity + change);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      displayCart();
+    }
+
+    // Remove item from cart
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      displayCart();
+    }
+
+    // Show order success popup
+    function showOrderSuccess() {
+      const popup = document.createElement('div');
+      popup.className = 'order-popup';
+      popup.innerHTML = `
+                <div class="popup-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Order Successful!</h2>
+                    <p>Thank you for your order!</p>
+                    <p>Your food will be delivered soon.</p>
+                    <button class="continue-shopping" onclick="window.location.href='index.html'">
+                        Return to Home
+                    </button>
+                </div>
+            `;
+
+      document.body.appendChild(popup);
+
+      // Clear cart after successful order
+      cart = [];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      displayCart();
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function () {
+      displayCart();
+
+      // Add checkout button listener
+      document.getElementById('checkout-btn').addEventListener('click', function () {
+        if (cart.length > 0) {
+          showOrderSuccess();
+        } else {
+          alert('Your cart is empty!');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - Moringa FoodHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-utensils"></i>
+      <span>Moringa FoodHub</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <a href="cart.html" class="cart-btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Menu Section -->
+  <section class="menu-section">
+    <h2 class="section-title">Our Menu</h2>
+    <div class="menu-grid">
+      <!-- Chicken Burger -->
+      <div class="menu-card">
+        <div class="item-icon">
+          <i class="fas fa-hamburger"></i>
+        </div>
+        <div class="menu-content">
+          <h3 class="menu-item-title">Chicken Burger</h3>
+          <p class="price">KSH 300</p>
+          <p class="description">Juicy chicken patty with fresh vegetables</p>
+          <button class="order-btn" data-name="Chicken Burger" data-price="300">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Pilau -->
+      <div class="menu-card">
+        <div class="item-icon">
+          <i class="fas fa-bowl-rice"></i>
+        </div>
+        <div class="menu-content">
+          <h3 class="menu-item-title">Pilau</h3>
+          <p class="price">KSH 200</p>
+          <p class="description">Aromatic rice cooked with spices</p>
+          <button class="order-btn" data-name="Pilau" data-price="200">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Fresh Mango Juice -->
+      <div class="menu-card">
+        <div class="item-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div class="menu-content">
+          <h3 class="menu-item-title">Fresh Mango Juice</h3>
+          <p class="price">KSH 100</p>
+          <p class="description">Freshly squeezed mango juice</p>
+          <button class="order-btn" data-name="Fresh Mango Juice" data-price="100">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-phone"></i> +254 700 000 000</p>
+        <p><i class="fas fa-envelope"></i> info@moringafoodhub.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Moringa FoodHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize cart from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Update cart count
+    function updateCartCount() {
+      const cartCount = document.querySelector('.cart-count');
+      cartCount.textContent = cart.length;
+    }
+
+    // Add to cart function
+    function addToCart(name, price) {
+      cart.push({
+        name: name,
+        price: parseInt(price),
+        quantity: 1
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      showAddToCartPopup(name);
+    }
+
+    // Show popup when item is added to cart
+    function showAddToCartPopup(itemName) {
+      const popup = document.createElement('div');
+      popup.className = 'order-popup';
+      popup.innerHTML = `
+                <div class="popup-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Added to Cart!</h2>
+                    <p>${itemName} has been added to your cart</p>
+                    <div class="popup-buttons">
+                        <button class="continue-shopping">Continue Shopping</button>
+                        <button class="go-to-cart">Go to Cart</button>
+                    </div>
+                </div>
+            `;
+
+      document.body.appendChild(popup);
+
+      popup.querySelector('.continue-shopping').addEventListener('click', () => {
+        popup.remove();
+      });
+
+      popup.querySelector('.go-to-cart').addEventListener('click', () => {
+        window.location.href = 'cart.html';
+      });
+    }
+
+    // Add click listeners to all order buttons
+    document.addEventListener('DOMContentLoaded', function () {
+      updateCartCount();
+
+      document.querySelectorAll('.order-btn').forEach(button => {
+        button.addEventListener('click', function () {
+          const name = this.dataset.name;
+          const price = this.dataset.price;
+          addToCart(name, price);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

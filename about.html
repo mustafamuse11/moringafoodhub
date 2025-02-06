@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Moringa FoodHub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-utensils"></i>
+      <span>Moringa FoodHub</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <a href="cart.html" class="cart-btn">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <h2 class="section-title">About Us</h2>
+
+    <div class="about-container">
+      <div class="about-content">
+        <div class="about-text">
+          <h3>Welcome to Moringa FoodHub</h3>
+          <p>We are dedicated to providing delicious and affordable meals to Moringa School students and staff. Our
+            mission is to ensure that everyone has access to quality food without leaving the campus.</p>
+
+          <h3>Our Story</h3>
+          <p>Started in 2023, Moringa FoodHub has grown from a small cafeteria to become the preferred food delivery
+            service within Moringa School. We understand the needs of busy students and provide quick, reliable service.
+          </p>
+        </div>
+
+        <div class="about-features">
+          <div class="feature-item">
+            <i class="fas fa-clock"></i>
+            <div class="feature-text">
+              <h4>Fast Service</h4>
+              <p>Quick delivery within 30 minutes</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="fas fa-utensils"></i>
+            <div class="feature-text">
+              <h4>Quality Food</h4>
+              <p>Fresh ingredients daily</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="fas fa-wallet"></i>
+            <div class="feature-text">
+              <h4>Best Prices</h4>
+              <p>Student-friendly pricing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-number">1000+</span>
+          <span class="stat-text">Happy Customers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">50+</span>
+          <span class="stat-text">Menu Items</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4.8</span>
+          <span class="stat-text">Average Rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <h2 class="section-title">Our Team</h2>
+    <div class="team-container">
+      <div class="team-member">
+        <div class="member-icon">
+          <i class="fas fa-user-chef"></i>
+        </div>
+        <h3>John Doe</h3>
+        <p>Head Chef</p>
+      </div>
+      <div class="team-member">
+        <div class="member-icon">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <h3>Jane Smith</h3>
+        <p>Manager</p>
+      </div>
+      <div class="team-member">
+        <div class="member-icon">
+          <i class="fas fa-motorcycle"></i>
+        </div>
+        <h3>Mike Johnson</h3>
+        <p>Delivery Lead</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-phone"></i> +254 700 000 000</p>
+        <p><i class="fas fa-envelope"></i> info@moringafoodhub.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Moringa FoodHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Update cart count from localStorage
+    document.addEventListener('DOMContentLoaded', function () {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartCount = document.querySelector('.cart-count');
+      cartCount.textContent = cart.length;
+    });
+  </script>
+</body>
+
+</html>
